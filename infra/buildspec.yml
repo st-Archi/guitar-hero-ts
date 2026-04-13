@@ -2,33 +2,29 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      python: 3.11
     commands:
       - echo "Instalando dependencias..."
-      - pip install boto3
+      - pip install boto3 --quiet
 
   pre_build:
     commands:
       - echo "Validando archivos..."
       - test -f index.html || (echo "FALTA index.html" && exit 1)
       - test -f main.js    || (echo "FALTA main.js"    && exit 1)
-      - echo "Validación correcta."
+      - echo "Validacion correcta."
 
   build:
     commands:
-      - echo "Construyendo imagen Docker..."
-      - docker build -f docker/Dockerfile -t guitar-hero-ts:latest .
       - echo "Empaquetando artefacto..."
-      - tar -czf guitar-hero-ts.tar.gz index.html main.js style.css map.json docker/ scripts/ infra/
+      - tar -czf guitar-hero-ts.tar.gz index.html main.js style.css map.json package.json
+      - echo "Artefacto creado."
 
   post_build:
     commands:
       - echo "Subiendo artefacto a S3..."
-      - aws s3 cp guitar-hero-ts.tar.gz s3://guitar-hero-ts-artifacts/ --region us-east-1
-      - echo "Despliegue completado."
+      - aws s3 cp guitar-hero-ts.tar.gz s3://guitar-hero-ts-artifacts-starchi/ --region us-east-1
+      - echo "Completado."
 
 artifacts:
   files:
     - guitar-hero-ts.tar.gz
-    - infra/cloudformation.yaml
