@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a; /* Fondo gris muy oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Evita barras de scroll accidentales */
+    font-family: 'Arial', sans-serif;
+}
+
+#game-container {
+    /* Le da un sutil brillo verde alrededor a la caja del juego */
+    box-shadow: 0 0 30px rgba(0, 255, 128, 0.1); 
+}
