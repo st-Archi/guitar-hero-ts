@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  guitar-hero:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: guitar-hero-game
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - guitar-hero-net
+
+networks:
+  guitar-hero-net:
+    driver: bridge
